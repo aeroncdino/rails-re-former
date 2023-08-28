@@ -1,15 +1,67 @@
-<h1>Create a New User</h1>
+
+<!-- <h1>Create a New User</h1> 
 
 <form action="/users" method="post" accept-charset="UTF-8">
-  <label for="username">Username</label>
-  <input type="text" id="username" name="user[username]" required />
+    <label for="username">Username</label>
+    <input type="text" id="username" name="user[username]" required />
 
-  <label for="email">Email</label>
-  <input type="email" id="email" name="user[email]" required />
+    <label for="email">Email</label>
+    <input type="email" id="email" name="user[email]" required />
 
-  <label for="password">Password</label>
-  <input type="password" id="password" name="user[password]" required />
+    <label for="password">Password</label>
+    <input type="password" id="password" name="user[password]" required />
 
-<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-  <input type="submit" value="Create User" />
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="Create User" />
 </form>
+
+
+<h1>Create a New User</h1>
+
+<%= form_tag(users_path) do %>
+  <%= label_tag :username, "Username" %>
+  <%= text_field_tag "user[username]", nil, required: true %>
+
+  <%= label_tag :email, "Email" %>
+  <%= email_field_tag "user[email]", nil, required: true %>
+
+  <%= label_tag :password, "Password" %>
+  <%= password_field_tag "user[password]", nil, required: true %>
+
+
+
+  <%= submit_tag "Create User" %>
+<% end %>
+-->
+
+
+<h1>Create a New User</h1>
+
+<%= form_with(model: @user, url: users_path) do |form| %>
+  <%= form.label :username, "Your username here:" %>
+  <%= form.text_field :username, required: true %>
+
+  <%= form.label :email, "Email" %>
+  <%= form.email_field :email, required: true, id: "email-field", placeholder: "example@example.com" %>
+
+  <%= form.label :password, "Password" %>
+  <%= form.password_field :password, required: true %>
+
+  <%= form.submit "Create User" %>
+
+
+<script>
+  const emailField = document.getElementById("email-field");
+
+  emailField.addEventListener("focus", () => {
+    if (emailField.value === "example@example.com") {
+      emailField.value = "";
+    }
+  });
+
+  emailField.addEventListener("blur", () => {
+    if (emailField.value === "") {
+      emailField.value = "example@example.com";
+    }
+  });
+<% end %>
